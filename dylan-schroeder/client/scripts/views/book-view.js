@@ -15,17 +15,17 @@ var app = app || {};
     next();
   }
 
-  bookView.initDetailPage = (ctx, next) => {
+  bookView.initDetailPage = function (ctx, next) {
     $('.book-detail').empty();
     app.showOnly('.detail-view');
     
     $('.book-detail').append(app.render('book-detail-template', ctx.book));
 
-    $('#update-btn').on('click', () => {
+    $('#update-btn').on('click', function() {
       page(`/books/${$(this).data('id')}/update`);
     });
 
-    $('#delete-btn').on('click', () => {
+    $('#delete-btn').on('click', function() {
       module.Book.destroy($(this).data('id'));
     });
     next();

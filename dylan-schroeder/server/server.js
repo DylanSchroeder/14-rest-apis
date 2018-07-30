@@ -97,6 +97,8 @@ app.get('/api/v1/books/find/:isbn', (req, res) => {
     });
 })
 
+
+
 app.get('/api/v1/books', (req, res) => {
   let SQL = 'SELECT book_id, title, author, image_url, isbn FROM books;';
   client.query(SQL)
@@ -106,6 +108,7 @@ app.get('/api/v1/books', (req, res) => {
       res.status(500).send(err);
     });
 });
+
 
 app.get('/api/v1/books/:id', (req, res) => {
   let SQL = 'SELECT * FROM books WHERE book_id=$1';
@@ -161,4 +164,27 @@ app.delete('/api/v1/books/:id', (req, res) => {
 
 app.get('*', (req, res) => res.status(403).send('This route does not exist'));
 
+loadDB();
 app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
+
+
+
+
+
+
+  
+
+
+function loadDB() {
+  client.query(`
+    CREATE TABLE IF NOT EXISTS books (
+      book_id SERIAL PRIMARY KEY,
+      title VARCHAR(255) NOT NULL,
+      author VARCHAR(255) NOT NULL,
+      isbn VARCHAR(255) NOT NULL,
+      "image_url" VARCHAR (400),
+      description VARCHAR(1000) NOT NULL)`)
+    .catch(err => {
+      console.error(err);
+    });
+};
