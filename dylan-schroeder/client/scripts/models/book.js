@@ -56,6 +56,7 @@ var app = app || {};
       .catch(errorCallback)
 
   // COMMENT: Where is this method invoked? What is passed in as the 'book' argument when invoked? What callback will be invoked after Book.loadAll is invoked?
+  //Respone: In bookView. The book variable is being passed from initSearchPage. 
   Book.find = (book, callback) =>
     $.get(`${app.ENVIRONMENT.apiUrl}/api/v1/books/find`, book)
       .then(Book.loadAll)
@@ -63,6 +64,7 @@ var app = app || {};
       .catch(errorCallback)
 
   // COMMENT: Where is this method invoked? How does it differ from the Book.find method, above?
+  // RESPONSE: IN bookView after the books from the search results have been appended to the dom. It doesn't need the Book.loadAll callback because that is already done and not needed for this method.
   Book.findOne = isbn =>
     $.get(`${app.ENVIRONMENT.apiUrl}/api/v1/books/find/${isbn}`)
       .then(Book.create)

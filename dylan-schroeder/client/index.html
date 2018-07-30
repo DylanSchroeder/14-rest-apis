@@ -63,6 +63,8 @@
         <li class="admin"><a href="/books/new">add book</a></li>
         <li class="admin"><a href="/books/search">search g-books</a></li>
         <!-- COMMENT: This will allow users to log in as an admin using a passphrase, but there is no way to log out. How would you enhance this application to allow a user to log out? -->
+        <!-- RESPONSE: From what I could find from looking this up, you could check if there is a login token in local storage and if there is, when you are on the homepage, you could add an event to log out which would clear the token from local storage -->
+
         <li><a href="/admin">login</a></li>
       </ul>
     </nav>

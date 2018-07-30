@@ -13,6 +13,7 @@ var app = app || {};
       let token = event.target.passphrase.value;
 
       // COMMENT: Is the token cleared out of local storage? Do you agree or disagree with this structure?
+      // No, and no because it doesn't allow for you to log out which would in turn clear the token from local storage.
       $.get(`${app.ENVIRONMENT.apiUrl}/api/v1/admin`, {token})
         .then(res => {
           if(res) {

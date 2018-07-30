@@ -75,15 +75,18 @@ var app = app || {};
   };
 
 // COMMENT: What is the purpose of this method?
+// RESPONSE: Shows the search results view. Maps over the book.all array and appends the books from the search with the toHtml method 
   bookView.initSearchFormPage = () => {
     app.showOnly('.search-view');
   }
 
   $('#search-form').on('submit', function(event) {
     // COMMENT: What default behavior is being prevented here?
+    // RESPONSE: It is preventing the submit from happening on the search-form when it is loaded.
     event.preventDefault();
 
     // COMMENT: What is the event.target, below? What will happen if the user does not provide the information needed for the title, author, or isbn properties?
+   // RESPONSE: The submit on the search form. It will just use the fields you did enter a value to search and the rest will just be left as empty strings.
     let book = {
       title: event.target.title.value || '',
       author: event.target.author.value || '',
@@ -93,17 +96,20 @@ var app = app || {};
     module.Book.find(book, bookView.initSearchResultsPage);
 
     // COMMENT: Why are these values set to an empty string?
+    // RESPONSE: So that if nothing is entered on those fields in the search it will just use these empty strings as the input.
     event.target.title.value = '';
     event.target.author.value = '';
     event.target.isbn.value = '';
   })
 
   // COMMENT: What is the purpose of this method?
+  // RESPONSE: It loads the results page and says to only show the search results and hide the search list.
   bookView.initSearchResultsPage = () => {
     app.showOnly('.search-results');
     $('#search-list').empty();
 
     // COMMENT: Explain how the .forEach() method is being used below.
+    // It is appending a new book to the seach-list based for every book that fits the search results and adding a button and event listener to see details for each of those books.
     module.Book.all.forEach(book => $('#search-list').append(book.toHtml()));
     $('.detail-button a').text('Add to list').attr('href', '/');
     $('.detail-button').on('click', () => {

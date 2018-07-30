@@ -12,6 +12,7 @@ const PORT = process.env.PORT;
 const TOKEN = process.env.TOKEN;
 
 // COMMENT: Explain the following line of code. What is the API_KEY? Where did it come from?
+// RESPONSE: It is the global variable for the google api key which gives you access to the google book api that is used throughout the app. It comes from the 
 const API_KEY = process.env.GOOGLE_API_KEY;
 
 // Database Setup
@@ -40,6 +41,7 @@ app.get('/api/v1/books/find', (req, res) => {
   console.log({ query });
 
   // COMMENT: What is superagent? How is it being used here? What other libraries are available that could be used for the same purpose?
+  // RESPONSE: It's an ajax api that is used to simplify http requests. AXIOS and Got are two others I found.
   superagent.get(url)
     .query({'q': query})
     .query({'key': API_KEY})
@@ -49,12 +51,15 @@ app.get('/api/v1/books/find', (req, res) => {
       return response.body.items.map((book, idx) => {
 
         // COMMENT: The line below is an example of destructuring. Explain destructuring in your own words.
+        // RESPONSE: It lets you take multiple values or properties and turn them into one variable.
         let { title, authors, industryIdentifiers, imageLinks, description } = book.volumeInfo;
 
         // COMMENT: What is the purpose of the following placeholder image?
+        //RESPONSE: It's a placeholder that tells the user that something went wrong loading the page they were looking for.
         let placeholderImage = 'http://www.newyorkpaddy.com/images/covers/NoCoverAvailable.jpg';
 
         // COMMENT: Explain how ternary operators are being used below.
+        // RESONSE: They are basically just simplifying the code so you don't have to do a bunch of if else statements.
         return {
           title: title || 'No title available',
           author: authors ? authors[0] : 'No authors available',
@@ -73,6 +78,7 @@ app.get('/api/v1/books/find', (req, res) => {
 })
 
 // COMMENT: How does this route differ from the route above? What does ':isbn' refer to in the code below?
+// RESPONSE: It is finding books based only on the isbn number.
 app.get('/api/v1/books/find/:isbn', (req, res) => {
   let url = 'https://www.googleapis.com/books/v1/volumes';
   superagent.get(url)
